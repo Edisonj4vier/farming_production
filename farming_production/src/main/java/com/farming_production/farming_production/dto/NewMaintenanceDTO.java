@@ -2,7 +2,7 @@ package com.farming_production.farming_production.dto;
 
 import java.util.Date;
 
-public class NewMantenimientoDTO {
+public class NewMaintenanceDTO {
     
     private String name;
     private String description;
