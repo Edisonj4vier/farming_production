@@ -1,5 +1,8 @@
 package com.farming_production.farming_production.models;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,34 +10,41 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="TBL_PRODUCTS")
+@Table(name = "TBL_MANTENIMIENTOS")
 @Getter
 @Setter
-public class Producto {
+public class Maintenance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="NAME",nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name="DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name="CATEGORY")
-    private String category;
+    @Column(name = "DATE")
+    private LocalDate date;
 
-    @Column(name="AMOUNT")
+    @Column(name = "AMOUNT")
     private String amount;
 
+    @Column(name = "STATE")
+    private String state;
+
     @ManyToOne
-    @JoinColumn(name="MANTENIMIENTO_ID",nullable=false)
-    private Mantenimiento mantenimiento;
+    @JoinColumn(name = "SUPPLY_ID", nullable = false)
+    private Supply supply;
+
+    @OneToMany(mappedBy = "Maintenance")
+    private List<Product> product;
 
 }

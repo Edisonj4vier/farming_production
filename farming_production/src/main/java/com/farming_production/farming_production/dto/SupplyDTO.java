@@ -1,12 +1,12 @@
 package com.farming_production.farming_production.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
-public class MantenimientoDTO {
+public class SupplyDTO {
+
     private Long id;
     private String name;
     private String description;
-    private Date date;
-    private String amount;
-    private String state;
+    private short amount;
+    private Date expericionDate;
 }
