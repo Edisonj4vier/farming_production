@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long title;
+    private Long id;
 
     @Column(name="NAME",nullable = false)
     private String name;
