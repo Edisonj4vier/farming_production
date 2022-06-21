@@ -17,7 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "TBL_MANTENIMIENTOS")
+@Table(name = "TBL_MAINTENANCE")
 @Getter
 @Setter
 public class Maintenance {
@@ -44,7 +44,7 @@ public class Maintenance {
     @JoinColumn(name = "SUPPLY_ID", nullable = false)
     private Supply supply;
 
-    @OneToMany(mappedBy = "Maintenance")
+    @OneToMany(mappedBy = "maintenance")
     private List<Product> product;
 
 }

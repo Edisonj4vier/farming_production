@@ -39,6 +39,6 @@ public class User {
 
  
     @OneToMany(mappedBy="user") //nombre del atributo en la clase B       
-    private List<Inquiry> inquiry;
+    private List<Inquiry> inquiry; // esto me aparece en consulta
 
 }
