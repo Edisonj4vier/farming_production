@@ -32,8 +32,8 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<UserDTO> create(@Valid @RequestBody NewUserDTO examDTO){
-        UserDTO result = service.create(examDTO);
+    public ResponseEntity<UserDTO> create(@Valid @RequestBody NewUserDTO userDTO){
+        UserDTO result = service.create(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);        
     }
 
@@ -50,8 +50,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@RequestBody UserDTO examDTO, @PathVariable("id") Long id){
-        UserDTO result = service.update(examDTO, id);
+    public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO, @PathVariable("id") Long id){
+        UserDTO result = service.update(userDTO, id);
         return ResponseEntity.ok().body(result);
     }
 
