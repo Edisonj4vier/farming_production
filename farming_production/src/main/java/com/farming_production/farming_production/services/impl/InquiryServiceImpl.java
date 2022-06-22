@@ -21,7 +21,7 @@ public class InquiryServiceImpl implements InquiryService{
     final ModelMapper modelMapper;
     final InquiryRepository inquiryRepository;
 
-    @Autowired
+    @Autowired // INYECTA LAS DEPENDENCIAS
     public InquiryServiceImpl(@Autowired InquiryRepository repository, ModelMapper mapper){
         this.inquiryRepository = repository;
         this.modelMapper = mapper;
@@ -34,6 +34,8 @@ public class InquiryServiceImpl implements InquiryService{
         inquiryRepository.save(inquiry);
         return modelMapper.map(inquiry,InquiryDTO.class);
     }
+
+
     
     @Override
     @Transactional(readOnly = true)
