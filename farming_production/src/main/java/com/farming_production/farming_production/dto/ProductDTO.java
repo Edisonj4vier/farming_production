@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDTO {
+public class ProductDTO extends NewProductDTO{
     
     private Long id;
 

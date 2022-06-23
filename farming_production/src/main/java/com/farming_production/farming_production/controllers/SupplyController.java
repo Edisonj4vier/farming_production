@@ -38,7 +38,7 @@ public class SupplyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SupplyDTO> retrive(@PathVariable("id") Long id){
+    public ResponseEntity<SupplyDTO> retrieve(@PathVariable("id") Long id){
         SupplyDTO result = service.retrieve(id);
         return ResponseEntity.ok().body(result);        
     }

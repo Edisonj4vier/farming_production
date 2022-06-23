@@ -8,6 +8,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class MaintenanceDTO {
+public class MaintenanceDTO extends NewMaintenanceDTO{
     private Long id;
 }

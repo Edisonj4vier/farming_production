@@ -20,10 +20,9 @@ import com.farming_production.farming_production.dto.UserDTO;
 import com.farming_production.farming_production.dto.NewUserDTO;
 import com.farming_production.farming_production.services.UserService;
 
-@RequestMapping("/users")
 @RestController
+@RequestMapping("/users")
 public class UserController {
-
     private final UserService service;
   
     @Autowired
@@ -38,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> retrive(@PathVariable("id") Long id){
+    public ResponseEntity<UserDTO> retrieve(@PathVariable("id") Long id){
         UserDTO result = service.retrieve(id);
         return ResponseEntity.ok().body(result);        
     }

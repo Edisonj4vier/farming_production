@@ -38,7 +38,7 @@ public class MaintenanceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MaintenanceDTO> retrive(@PathVariable("id") Long id){
+    public ResponseEntity<MaintenanceDTO> retrieve(@PathVariable("id") Long id){
         MaintenanceDTO result = service.retrieve(id);
         return ResponseEntity.ok().body(result);        
     }

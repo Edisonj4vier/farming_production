@@ -38,7 +38,7 @@ public class InquiryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InquiryDTO> retrive(@PathVariable("id") Long id){
+    public ResponseEntity<InquiryDTO> retrieve(@PathVariable("id") Long id){
         InquiryDTO result = service.retrieve(id);
         return ResponseEntity.ok().body(result);        
     }

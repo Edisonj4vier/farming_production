@@ -16,7 +16,7 @@ import com.farming_production.farming_production.repositories.UserRepository;
 import com.farming_production.farming_production.services.UserService;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     final ModelMapper modelMapper;
     final UserRepository userRepository;
 

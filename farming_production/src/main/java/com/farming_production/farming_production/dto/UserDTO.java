@@ -8,7 +8,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class UserDTO {
+public class UserDTO extends NewUserDTO{
     
     private Long id;
 }

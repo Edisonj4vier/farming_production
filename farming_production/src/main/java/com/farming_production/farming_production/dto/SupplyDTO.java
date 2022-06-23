@@ -8,7 +8,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class SupplyDTO {
+public class SupplyDTO extends NewSupplyDTO{
 
     private Long id;
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class InquiryDTO {
+public class InquiryDTO extends NewInquiryDTO{
     
     private Long id;
 }
