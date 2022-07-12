@@ -6,11 +6,8 @@ import com.farming_production.farming_production.dto.NewSupplyDTO;
 import com.farming_production.farming_production.dto.SupplyDTO;
 
 public interface SupplyService {
-    public SupplyDTO create(NewSupplyDTO supplyDTO);
-    public SupplyDTO retrieve(Long id);
-    public SupplyDTO update(SupplyDTO supplyDTO, Long id);
-    public void delete(Long id);
-
-    public List<SupplyDTO> list();
     
+    public List<SupplyDTO> create(Long idProduct, Long idMaintenance, List<NewSupplyDTO> supplies);
+    public List<SupplyDTO> list(Long idProduct, Long idMaintenance);
+    public void remove(Long idExam, Long idMaintenance);
 }

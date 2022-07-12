@@ -1,17 +1,22 @@
 package com.farming_production.farming_production.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.farming_production.farming_production.dto.NewSupplyDTO;
 import com.farming_production.farming_production.dto.SupplyDTO;
+import com.farming_production.farming_production.exceptions.NoContentException;
 import com.farming_production.farming_production.exceptions.ResourceNotFoundException;
+import com.farming_production.farming_production.models.Maintenance;
+import com.farming_production.farming_production.models.Product;
 import com.farming_production.farming_production.models.Supply;
+import com.farming_production.farming_production.repositories.MaintenanceRepository;
+import com.farming_production.farming_production.repositories.ProductRepository;
 import com.farming_production.farming_production.repositories.SupplyRepository;
 import com.farming_production.farming_production.services.SupplyService;
 
@@ -19,52 +24,61 @@ import com.farming_production.farming_production.services.SupplyService;
 public class SupplyServiceImpl implements SupplyService{
     final ModelMapper modelMapper;
     final SupplyRepository supplyRepository;
+    final MaintenanceRepository maintenanceRepository ; 
+    final ProductRepository productRepository;  
 
-    @Autowired
-    public SupplyServiceImpl(@Autowired SupplyRepository repository, ModelMapper mapper){
-        this.supplyRepository = repository;
+    public SupplyServiceImpl(SupplyRepository supplyRepository, ModelMapper mapper,
+    MaintenanceRepository maintenanceRepository , ProductRepository productRepository){
+        this.supplyRepository = supplyRepository;
         this.modelMapper = mapper;
+        this.maintenanceRepository = maintenanceRepository ;
+        this.productRepository = productRepository ; 
     }
 
     @Override
-    @Transactional
-    public SupplyDTO create(NewSupplyDTO supplyDTO){
-        Supply supply = modelMapper.map(supplyDTO, Supply.class);
-        supplyRepository.save(supply);
-        return modelMapper.map(supply,SupplyDTO.class);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public SupplyDTO retrieve(Long id) {
-        Supply supply = supplyRepository.findById(id)
-            .orElseThrow(()-> new ResourceNotFoundException("Supply not found"));
-        return modelMapper.map(supply, SupplyDTO.class);
+    @Transactional //
+    public List<SupplyDTO> create(Long idProduct, Long idMaintenance, List<NewSupplyDTO> supplies){
+        Product product = productRepository.findById(idProduct)
+        .orElseThrow(()-> new ResourceNotFoundException("Product not found"));
+        
+        Maintenance maintenance = maintenanceRepository.findById(idMaintenance)
+        .orElseThrow(()-> new ResourceNotFoundException("Maintenance not found"));
+        
+        maintenance.setProduct(product);
+
+        List<SupplyDTO> result = new ArrayList<SupplyDTO>();
+        supplies.forEach(op -> {
+            Supply supply = modelMapper.map(op, Supply.class);
+            supply.setMaintenance(maintenance);
+            supplyRepository.save(supply);
+            result.add(modelMapper.map(supply, SupplyDTO.class));
+        });        
+        return result;
     }
 
-    @Override
-    @Transactional
-    public SupplyDTO update(SupplyDTO supplyDTO, Long id) {
-        Supply supply = supplyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Supply not found"));
-        supply.setId(id);
-        supply = modelMapper.map(supplyDTO, Supply.class);
-        supplyRepository.save(supply);
-
-        return modelMapper.map(supply, SupplyDTO.class);
-    }
-    
-    @Override
-    @Transactional
-    public void delete(Long id) {
-        Supply supply = supplyRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Supply not found"));
-        supplyRepository.deleteById(supply.getId());
-    }
 
     @Override
     @Transactional(readOnly = true)
-    public List<SupplyDTO> list() {
-        List<Supply> supplys = supplyRepository.findAll();
-        return supplys.stream().map(supply -> modelMapper.map(supply, SupplyDTO.class)).collect(Collectors.toList());
+    public List<SupplyDTO> list(Long idProduct, Long idMaintenance){
+        Product product = productRepository.findById(idProduct).orElseThrow(()-> new ResourceNotFoundException("Prouct not found"));
+        Maintenance maintenance = maintenanceRepository.findById(idMaintenance).orElseThrow(()-> new ResourceNotFoundException("Maintenance not found"));
+        maintenance.setProduct(product);
+        
+        if(maintenance.getSupplies().isEmpty()) throw new NoContentException("Maintenance is empty");
+        return maintenance.getSupplies().stream().map(op -> modelMapper.map(op, SupplyDTO.class))
+        .collect(Collectors.toList());
     }
-    
+
+    @Override
+    @Transactional
+    public void remove(Long idExam, Long idQuestion) {
+        Product product = productRepository.findById(idExam).orElseThrow(()-> new ResourceNotFoundException("Product not found"));
+        Maintenance maintenance = maintenanceRepository.findById(idQuestion).orElseThrow(()-> new ResourceNotFoundException("Maintenance not found"));
+        maintenance.setProduct(product);
+        if(maintenance.getSupplies().isEmpty()) throw new NoContentException("Supply is empty");
+        maintenance.getSupplies().forEach(op -> {
+            supplyRepository.delete(op);            
+        });                      
+    }
+
 }

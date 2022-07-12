@@ -6,12 +6,11 @@ import com.farming_production.farming_production.dto.MaintenanceDTO;
 import com.farming_production.farming_production.dto.NewMaintenanceDTO;
 
 public interface MaintenanceService {
-    
-    public MaintenanceDTO create(NewMaintenanceDTO maintenanceDTO);
-    public MaintenanceDTO retrieve(Long id);
-    public MaintenanceDTO update(MaintenanceDTO maintenanceDTO, Long id);
-    public void delete(Long id);
+    public MaintenanceDTO create(Long idProduct, NewMaintenanceDTO maintenanceDTO);
+    public MaintenanceDTO retrieve(Long idProduct, Long id); // Necesitaria solo 1p 
+    public MaintenanceDTO update(MaintenanceDTO maintenceDTO, Long idProduct, Long idMaintenance);
+    public void delete(Long idProduct, Long id);
 
-    public List<MaintenanceDTO> list();
-    
+    public List<MaintenanceDTO> list(Long idProduct);
+
 }

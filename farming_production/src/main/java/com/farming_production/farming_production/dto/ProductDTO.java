@@ -8,7 +8,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDTO extends NewProductDTO{
-    
     private Long id;
 
 }

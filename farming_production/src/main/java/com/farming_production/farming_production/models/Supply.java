@@ -1,14 +1,14 @@
 package com.farming_production.farming_production.models;
 
 import java.sql.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -33,8 +33,9 @@ public class Supply {
     @Column(name = "EXPERICION_DATE")
     private Date expericionDate;
 
-    @OneToMany(mappedBy = "supply")
-    private List<Maintenance> maintenances;
+    @ManyToOne
+    @JoinColumn(name="MAINTENANCE_ID", nullable=false)
+    private Maintenance maintenance;    
 
 
 }

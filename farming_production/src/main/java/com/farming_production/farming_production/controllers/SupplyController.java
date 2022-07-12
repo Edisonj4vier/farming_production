@@ -4,14 +4,13 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,44 +19,38 @@ import com.farming_production.farming_production.dto.SupplyDTO;
 import com.farming_production.farming_production.dto.NewSupplyDTO;
 import com.farming_production.farming_production.services.SupplyService;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/supply")
 @RestController
 public class SupplyController {
 
     private final SupplyService service;
   
-    @Autowired
     public SupplyController(SupplyService srv){
         this.service =srv;
     }
 
-    @PostMapping()
-    public ResponseEntity<SupplyDTO> create(@Valid @RequestBody NewSupplyDTO supplyDTO){
-        SupplyDTO result = service.create(supplyDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);        
+
+   // (Long idProduct, Long idMaintenance, List<NewSupplyDTO> supplies)
+    /* ================ CREATE ================ */
+    @PostMapping("/{id}/maintenance/{idMaintenance}/supplies")
+    public ResponseEntity<List<SupplyDTO>> create(@PathVariable("id") Long id, @PathVariable("idQuestion") Long idQuestion, @Valid @RequestBody 
+    List<NewSupplyDTO> suppliesDTO){
+        List<SupplyDTO> optionDTOs = service.create(id, idQuestion, suppliesDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(optionDTOs);        
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<SupplyDTO> retrieve(@PathVariable("id") Long id){
-        SupplyDTO result = service.retrieve(id);
-        return ResponseEntity.ok().body(result);        
-    }
+  /* ================ DELETE ================ */
+  @DeleteMapping("/{id}/maintenance/{idMaintenance}/supplies")
+  public ResponseEntity<List<SupplyDTO>> delete(@PathVariable("id") Long id, @PathVariable("idQuestion") Long idQuestion){
+      service.remove(id, idQuestion);
+      return ResponseEntity.noContent().build();
+  }
 
-    @GetMapping() //el verbo es diferente a create ya que va
-    public ResponseEntity<List<SupplyDTO>> list(){
-        List<SupplyDTO> result  = service.list();
-        return ResponseEntity.ok().body(result);        
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<SupplyDTO> update(@RequestBody SupplyDTO supplyDTO, @PathVariable("id") Long id){
-        SupplyDTO result = service.update(supplyDTO, id);
-        return ResponseEntity.ok().body(result);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        service.delete(id);
-        return ResponseEntity.ok().body("Supply deleted!");        
-    }
+  /* ================ LIST ================ */
+  @GetMapping("/{id}/maintenance/{idMaintenance}/supplies")
+  public ResponseEntity<List<SupplyDTO>> list(@PathVariable("id") Long id, @PathVariable("idMaintenance") Long idQuestion){
+      List<SupplyDTO> optionDTOs = service.list(id, idQuestion);
+      return ResponseEntity.status(HttpStatus.OK).body(optionDTOs);        
+  }
 }

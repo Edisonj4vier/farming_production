@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,44 +20,52 @@ import com.farming_production.farming_production.dto.MaintenanceDTO;
 import com.farming_production.farming_production.dto.NewMaintenanceDTO;
 import com.farming_production.farming_production.services.MaintenanceService;
 
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/maintenance")
 @RestController
 public class MaintenanceController {
 
     private final MaintenanceService service;
   
-    @Autowired
     public MaintenanceController(MaintenanceService srv){
         this.service =srv;
     }
 
-    @PostMapping()
-    public ResponseEntity<MaintenanceDTO> create(@Valid @RequestBody NewMaintenanceDTO maintenanceDTO){
-        MaintenanceDTO result = service.create(maintenanceDTO);
+    /* ================ CREATE ================ */
+    @PostMapping("/{idProduct}/maintenance")
+    public ResponseEntity<MaintenanceDTO> create(@PathVariable("idProduct")  long idProduct , @Valid @RequestBody NewMaintenanceDTO maintenanceDTO){
+        MaintenanceDTO result = service.create(idProduct , maintenanceDTO );
         return ResponseEntity.status(HttpStatus.CREATED).body(result);        
     }
+    /* ================ RETRIEVE ================ */
 
-    @GetMapping("/{id}")
-    public ResponseEntity<MaintenanceDTO> retrieve(@PathVariable("id") Long id){
-        MaintenanceDTO result = service.retrieve(id);
+    @GetMapping("/{idProduct}/maintenance{idMaintenance}")
+    public ResponseEntity<MaintenanceDTO> retrieve(@PathVariable("idProduct") Long idProduct , @PathVariable ("idMaintenance") Long idMaintenance){
+        MaintenanceDTO result = service.retrieve(idProduct , idMaintenance);
         return ResponseEntity.ok().body(result);        
     }
 
-    @GetMapping() //el verbo es diferente a create ya que va
-    public ResponseEntity<List<MaintenanceDTO>> list(){
-        List<MaintenanceDTO> result  = service.list();
-        return ResponseEntity.ok().body(result);        
+    /* ================ LIST ================ */
+    @GetMapping("/{idProduct}/maintenance") 
+    public ResponseEntity<List<MaintenanceDTO>> list(@PathVariable("idProduct") Long idProduct){
+        List<MaintenanceDTO> maintenance  = service.list(idProduct);
+        return ResponseEntity.ok().body(maintenance);        
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<MaintenanceDTO> update(@RequestBody MaintenanceDTO maintenanceDTO, @PathVariable("id") Long id){
-        MaintenanceDTO result = service.update(maintenanceDTO, id);
+    /* ================ UPDATE ================ */
+    @PutMapping("/{idProduct}/maintenance/{idMaintenance}")
+    public ResponseEntity<MaintenanceDTO> update(@RequestBody MaintenanceDTO maintenanceDTO, @PathVariable("idProduct") Long idProduct , 
+    @PathVariable("idMaintenance") Long idMaintenance){
+
+        MaintenanceDTO result = service.update(maintenanceDTO, idProduct , idMaintenance);
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        service.delete(id);
+    /* ================ DELETE ================ */
+    @DeleteMapping("/{idProduct}/maintenance/{idMaintenance}")
+    public ResponseEntity<String> delete(@PathVariable("idProduct") Long idProduct , @PathVariable ("idMaintenance") Long idMaintenance){
+        service.delete(idProduct , idMaintenance);
         return ResponseEntity.ok().body("Maintenance deleted!");        
     }
 }

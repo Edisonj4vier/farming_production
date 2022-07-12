@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,22 +20,24 @@ import com.farming_production.farming_production.dto.InquiryDTO;
 import com.farming_production.farming_production.dto.NewInquiryDTO;
 import com.farming_production.farming_production.services.InquiryService;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/inquiry")
 @RestController
 public class InquiryController {
 
     private final InquiryService service;
   
-    @Autowired
     public InquiryController(InquiryService srv){
         this.service =srv;
     }
 
+        /* ================ CREATE ================ */
     @PostMapping()
     public ResponseEntity<InquiryDTO> create(@Valid @RequestBody NewInquiryDTO inquiryDTO){
         InquiryDTO result = service.create(inquiryDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);        
     }
+    /* ================ RETRIEVE ================ */
 
     @GetMapping("/{id}")
     public ResponseEntity<InquiryDTO> retrieve(@PathVariable("id") Long id){
@@ -43,11 +45,15 @@ public class InquiryController {
         return ResponseEntity.ok().body(result);        
     }
 
+    /* ================ LIST ================ */
+
     @GetMapping() //el verbo es diferente a create ya que va
     public ResponseEntity<List<InquiryDTO>> list(){
         List<InquiryDTO> result  = service.list();
         return ResponseEntity.ok().body(result);        
     }
+
+    /* ================ UPDATE ================ */
 
     @PutMapping("/{id}")
     public ResponseEntity<InquiryDTO> update(@RequestBody InquiryDTO inquiryDTO, @PathVariable("id") Long id){
@@ -55,6 +61,7 @@ public class InquiryController {
         return ResponseEntity.ok().body(result);
     }
 
+    /* ================ DELETE ================ */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id){
         service.delete(id);

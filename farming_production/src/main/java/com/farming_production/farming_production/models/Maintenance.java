@@ -41,10 +41,11 @@ public class Maintenance {
     private String state;
 
     @ManyToOne
-    @JoinColumn(name = "SUPPLY_ID", nullable = false)
-    private Supply supply;
+    @JoinColumn(name = "PRODUCT_ID", nullable = false)
+    private Product product;
 
     @OneToMany(mappedBy = "maintenance")
-    private List<Product> product;
+    private List<Supply> supplies;
+    
 
 }

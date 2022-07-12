@@ -10,7 +10,8 @@ public interface ProductService {
     public ProductDTO create(NewProductDTO productDTO);
     public ProductDTO retrieve(Long id);
     public ProductDTO update(ProductDTO productDTO, Long id);
-    public void delete(Long id);
+    public void remove(Long id);
 
-    public List<ProductDTO> list();
+    public List<ProductDTO> list(int page, int size , String sort);
+    long count();
 }
