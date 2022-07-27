@@ -22,7 +22,7 @@ import com.farming_production.farming_production.dto.NewProductDTO;
 import com.farming_production.farming_production.services.ProductService;
 
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/product")
+@RequestMapping("/products")
 @RestController
 public class ProductController {
 
@@ -64,7 +64,7 @@ public class ProductController {
     /* ================ LIST ================ */
     @GetMapping("/{page}/{size}")
     public ResponseEntity<List<ProductDTO>> list(@PathVariable("page") int page,
-            @PathVariable("size") int size, @RequestParam(name = "sort" , required = false) String sort) {
+            @PathVariable("size") int size, @RequestParam(name = "sort", required = false) String sort) {
         List<ProductDTO> result = service.list(page, size, sort);
         return ResponseEntity.ok().body(result);
     }
