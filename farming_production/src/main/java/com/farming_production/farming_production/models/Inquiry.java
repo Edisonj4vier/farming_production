@@ -1,6 +1,6 @@
 package com.farming_production.farming_production.models;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +36,6 @@ public class Inquiry {
     @ManyToOne
     @JoinColumn(name="USER_ID", nullable=false)
     private User user;
-
 
     @ManyToOne
     @JoinColumn(name="PRODUCT_ID", nullable=false)

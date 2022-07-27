@@ -4,12 +4,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import com.farming_production.farming_production.dto.NewProductDTO;
 import com.farming_production.farming_production.dto.ProductDTO;
+import com.farming_production.farming_production.exceptions.NoContentException;
 import com.farming_production.farming_production.exceptions.ResourceNotFoundException;
 import com.farming_production.farming_production.models.Product;
 import com.farming_production.farming_production.repositories.ProductRepository;
@@ -20,8 +27,7 @@ public class ProductServiceImpl implements ProductService {
     final ModelMapper modelMapper;
     final ProductRepository productRepository;
 
-    @Autowired
-    public ProductServiceImpl(@Autowired ProductRepository repository, ModelMapper mapper){
+    public ProductServiceImpl(ProductRepository repository, ModelMapper mapper){
         this.productRepository = repository;
         this.modelMapper = mapper;
     }
@@ -45,7 +51,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductDTO update(ProductDTO productDTO, Long id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+     
         product.setId(id);
         product = modelMapper.map(productDTO, Product.class);
         productRepository.save(product);
@@ -55,16 +63,30 @@ public class ProductServiceImpl implements ProductService {
     
     @Override
     @Transactional
-    public void delete(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product not found"));
+    public void remove(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Product not found"));
         productRepository.deleteById(product.getId());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductDTO> list() {
-        List<Product> products = productRepository.findAll();
-        return products.stream().map(product -> modelMapper.map(product, ProductDTO.class)).collect(Collectors.toList());
+    public List<ProductDTO> list(int page , int size , String sort) {
+
+        Pageable pageable = sort == null || sort.isEmpty() ? 
+        PageRequest.of(page, size) 
+    :   PageRequest.of(page, size,  Sort.by(sort));
+
+        Page<Product> products = productRepository.findAll(pageable);
+        if (products.isEmpty()) throw new NoContentException("Product is empty");
+        return products.stream().map(product -> modelMapper.map(product, ProductDTO.class))
+        .collect(Collectors.toList());
+    }
+        
+    @Override
+    public long count() {        
+        return productRepository.count();
+    
     }
     
 }

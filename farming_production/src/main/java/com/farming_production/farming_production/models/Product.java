@@ -7,8 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,10 +35,6 @@ public class Product {
     @Column(name="AMOUNT")
     private String amount;
 
-    @ManyToOne
-    @JoinColumn(name="MAINTENANCE_ID",nullable=false)
-    private Maintenance maintenance;
-
     @OneToMany(mappedBy="product") //nombre del atributo en la clase B       
-    private List<Inquiry> inquiry;
+    private List<Maintenance> maintenances;
 }
