@@ -20,37 +20,38 @@ import com.farming_production.farming_production.dto.NewSupplyDTO;
 import com.farming_production.farming_production.services.SupplyService;
 
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/supply")
+@RequestMapping("/supplies")
 @RestController
 public class SupplyController {
 
     private final SupplyService service;
-  
-    public SupplyController(SupplyService srv){
-        this.service =srv;
+
+    public SupplyController(SupplyService srv) {
+        this.service = srv;
     }
 
-
-   // (Long idProduct, Long idMaintenance, List<NewSupplyDTO> supplies)
+    // (Long idProduct, Long idMaintenance, List<NewSupplyDTO> supplies)
     /* ================ CREATE ================ */
     @PostMapping("/{id}/maintenance/{idMaintenance}/supplies")
-    public ResponseEntity<List<SupplyDTO>> create(@PathVariable("id") Long id, @PathVariable("idQuestion") Long idQuestion, @Valid @RequestBody 
-    List<NewSupplyDTO> suppliesDTO){
+    public ResponseEntity<List<SupplyDTO>> create(@PathVariable("id") Long id,
+            @PathVariable("idQuestion") Long idQuestion, @Valid @RequestBody List<NewSupplyDTO> suppliesDTO) {
         List<SupplyDTO> optionDTOs = service.create(id, idQuestion, suppliesDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(optionDTOs);        
+        return ResponseEntity.status(HttpStatus.CREATED).body(optionDTOs);
     }
 
-  /* ================ DELETE ================ */
-  @DeleteMapping("/{id}/maintenance/{idMaintenance}/supplies")
-  public ResponseEntity<List<SupplyDTO>> delete(@PathVariable("id") Long id, @PathVariable("idQuestion") Long idQuestion){
-      service.remove(id, idQuestion);
-      return ResponseEntity.noContent().build();
-  }
+    /* ================ DELETE ================ */
+    @DeleteMapping("/{id}/maintenance/{idMaintenance}/supplies")
+    public ResponseEntity<List<SupplyDTO>> delete(@PathVariable("id") Long id,
+            @PathVariable("idQuestion") Long idQuestion) {
+        service.remove(id, idQuestion);
+        return ResponseEntity.noContent().build();
+    }
 
-  /* ================ LIST ================ */
-  @GetMapping("/{id}/maintenance/{idMaintenance}/supplies")
-  public ResponseEntity<List<SupplyDTO>> list(@PathVariable("id") Long id, @PathVariable("idMaintenance") Long idQuestion){
-      List<SupplyDTO> optionDTOs = service.list(id, idQuestion);
-      return ResponseEntity.status(HttpStatus.OK).body(optionDTOs);        
-  }
+    /* ================ LIST ================ */
+    @GetMapping("/{id}/maintenance/{idMaintenance}/supplies")
+    public ResponseEntity<List<SupplyDTO>> list(@PathVariable("id") Long id,
+            @PathVariable("idMaintenance") Long idQuestion) {
+        List<SupplyDTO> optionDTOs = service.list(id, idQuestion);
+        return ResponseEntity.status(HttpStatus.OK).body(optionDTOs);
+    }
 }

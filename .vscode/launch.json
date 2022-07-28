@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-FarmingProductionApplication<farming_production>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.farming_production.farming_production.FarmingProductionApplication",
+            "projectName": "farming_production",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
