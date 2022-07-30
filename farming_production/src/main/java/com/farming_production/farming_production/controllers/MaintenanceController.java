@@ -21,7 +21,7 @@ import com.farming_production.farming_production.dto.NewMaintenanceDTO;
 import com.farming_production.farming_production.services.MaintenanceService;
 
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/maintenances")
+@RequestMapping("/products")
 @RestController
 public class MaintenanceController {
 
@@ -32,7 +32,7 @@ public class MaintenanceController {
     }
 
     /* ================ CREATE ================ */
-    @PostMapping("/{idProduct}/maintenance")
+    @PostMapping("/{idProduct}/maintenances")
     public ResponseEntity<MaintenanceDTO> create(@PathVariable("idProduct") long idProduct,
             @Valid @RequestBody NewMaintenanceDTO maintenanceDTO) {
         MaintenanceDTO result = service.create(idProduct, maintenanceDTO);
@@ -40,7 +40,7 @@ public class MaintenanceController {
     }
     /* ================ RETRIEVE ================ */
 
-    @GetMapping("/{idProduct}/maintenance{idMaintenance}")
+    @GetMapping("/{idProduct}/maintenances{idMaintenance}")
     public ResponseEntity<MaintenanceDTO> retrieve(@PathVariable("idProduct") Long idProduct,
             @PathVariable("idMaintenance") Long idMaintenance) {
         MaintenanceDTO result = service.retrieve(idProduct, idMaintenance);
@@ -48,14 +48,14 @@ public class MaintenanceController {
     }
 
     /* ================ LIST ================ */
-    @GetMapping("/{idProduct}/maintenance")
+    @GetMapping("/{idProduct}/maintenances")
     public ResponseEntity<List<MaintenanceDTO>> list(@PathVariable("idProduct") Long idProduct) {
         List<MaintenanceDTO> maintenance = service.list(idProduct);
         return ResponseEntity.ok().body(maintenance);
     }
 
     /* ================ UPDATE ================ */
-    @PutMapping("/{idProduct}/maintenance/{idMaintenance}")
+    @PutMapping("/{idProduct}/maintenances/{idMaintenance}")
     public ResponseEntity<MaintenanceDTO> update(@RequestBody MaintenanceDTO maintenanceDTO,
             @PathVariable("idProduct") Long idProduct,
             @PathVariable("idMaintenance") Long idMaintenance) {
@@ -65,7 +65,7 @@ public class MaintenanceController {
     }
 
     /* ================ DELETE ================ */
-    @DeleteMapping("/{idProduct}/maintenance/{idMaintenance}")
+    @DeleteMapping("/{idProduct}/maintenances/{idMaintenance}")
     public ResponseEntity<String> delete(@PathVariable("idProduct") Long idProduct,
             @PathVariable("idMaintenance") Long idMaintenance) {
         service.delete(idProduct, idMaintenance);
