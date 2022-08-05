@@ -50,8 +50,8 @@ public class MaintenanceController {
     /* ================ LIST ================ */
     @GetMapping("/{idProduct}/maintenance")
     public ResponseEntity<List<MaintenanceDTO>> list(@PathVariable("idProduct") Long idProduct) {
-        List<MaintenanceDTO> maintenance = service.list(idProduct);
-        return ResponseEntity.ok().body(maintenance);
+        List<MaintenanceDTO> maintenances = service.list(idProduct);
+        return ResponseEntity.ok().body(maintenances);
     }
 
     /* ================ UPDATE ================ */
