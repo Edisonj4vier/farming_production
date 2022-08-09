@@ -1,6 +1,5 @@
 package com.farming_production.farming_production.models;
 
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +30,7 @@ public class Supply {
     @Column(name = "AMOUNT")
     private short amount;
     @Column(name = "EXPERICION_DATE")
-    private Date expericionDate;
+    private String expericionDate;
 
     @ManyToOne
     @JoinColumn(name="MAINTENANCE_ID", nullable=false)

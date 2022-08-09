@@ -2,6 +2,7 @@ package com.farming_production.farming_production.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,6 +36,6 @@ public class Product {
     @Column(name="AMOUNT")
     private String amount;
 
-    @OneToMany(mappedBy="product") //nombre del atributo en la clase B       
+    @OneToMany(mappedBy="product" , cascade = CascadeType.ALL) //nombre del atributo en la clase B       
     private List<Maintenance> maintenances;
 }

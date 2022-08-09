@@ -1,6 +1,5 @@
 package com.farming_production.farming_production.models;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -32,7 +31,7 @@ public class Maintenance {
     private String description;
 
     @Column(name = "DATE")
-    private LocalDate date;
+    private String date;
 
     @Column(name = "AMOUNT")
     private String amount;
