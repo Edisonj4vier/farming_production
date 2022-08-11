@@ -1,4 +1,5 @@
 package com.farming_production.farming_production.dto;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,4 +12,5 @@ public class NewProductDTO {
     private String description;
     private String category;
     private String amount;
+    private String date;
 }
