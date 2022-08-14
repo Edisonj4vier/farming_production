@@ -40,10 +40,10 @@ public class MaintenanceController {
     }
     /* ================ RETRIEVE ================ */
 
-    @GetMapping("/{idProduct}/maintenances{idMaintenance}")
+    @GetMapping("/{idProduct}/maintenances/{id}")
     public ResponseEntity<MaintenanceDTO> retrieve(@PathVariable("idProduct") Long idProduct,
-            @PathVariable("idMaintenance") Long idMaintenance) {
-        MaintenanceDTO result = service.retrieve(idProduct, idMaintenance);
+            @PathVariable("id") Long id) {
+        MaintenanceDTO result = service.retrieve(idProduct, id);
         return ResponseEntity.ok().body(result);
     }
 
@@ -55,20 +55,20 @@ public class MaintenanceController {
     }
 
     /* ================ UPDATE ================ */
-    @PutMapping("/{idProduct}/maintenances/{idMaintenance}")
+    @PutMapping("/{idProduct}/maintenances/{id}")
     public ResponseEntity<MaintenanceDTO> update(@RequestBody MaintenanceDTO maintenanceDTO,
             @PathVariable("idProduct") Long idProduct,
-            @PathVariable("idMaintenance") Long idMaintenance) {
+            @PathVariable("id") Long id) {
 
-        MaintenanceDTO result = service.update(maintenanceDTO, idProduct, idMaintenance);
+        MaintenanceDTO result = service.update(maintenanceDTO, idProduct, id);
         return ResponseEntity.ok().body(result);
     }
 
     /* ================ DELETE ================ */
-    @DeleteMapping("/{idProduct}/maintenances/{idMaintenance}")
+    @DeleteMapping("/{idProduct}/maintenances/{id}")
     public ResponseEntity<String> delete(@PathVariable("idProduct") Long idProduct,
-            @PathVariable("idMaintenance") Long idMaintenance) {
-        service.delete(idProduct, idMaintenance);
+            @PathVariable("id") Long id) {
+        service.delete(idProduct, id);
         return ResponseEntity.ok().body("Maintenance deleted!");
     }
 }
