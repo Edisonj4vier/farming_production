@@ -66,9 +66,9 @@ public class MaintenanceController {
 
     /* ================ DELETE ================ */
     @DeleteMapping("/{idProduct}/maintenances/{id}")
-    public ResponseEntity<String> delete(@PathVariable("idProduct") Long idProduct,
-            @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("idProduct") Long idProduct, @PathVariable("id") Long id) {
         service.delete(idProduct, id);
-        return ResponseEntity.ok().body("Maintenance deleted!");
+        return ResponseEntity.noContent().build();
     }
+
 }

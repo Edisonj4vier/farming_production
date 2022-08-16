@@ -18,12 +18,13 @@ import com.farming_production.farming_production.repositories.ProductRepository;
 import com.farming_production.farming_production.services.MaintenanceService;
 
 @Service
-public class MaintenanceServiceImpl implements MaintenanceService{
+public class MaintenanceServiceImpl implements MaintenanceService {
     final ModelMapper modelMapper;
     final MaintenanceRepository maintenanceRepository;
-    final ProductRepository productRepository ; 
+    final ProductRepository productRepository;
 
-    public MaintenanceServiceImpl(MaintenanceRepository repository, ModelMapper mapper , ProductRepository productRepository){
+    public MaintenanceServiceImpl(MaintenanceRepository repository, ModelMapper mapper,
+            ProductRepository productRepository) {
         this.maintenanceRepository = repository;
         this.modelMapper = mapper;
         this.productRepository = productRepository;
@@ -31,68 +32,66 @@ public class MaintenanceServiceImpl implements MaintenanceService{
 
     @Override
     @Transactional
-    public MaintenanceDTO create(Long idProduct , NewMaintenanceDTO maintenanceDTO){
-       Product product = productRepository.findById(idProduct)
-        .orElseThrow(()-> new ResourceNotFoundException("Product no found"));
-        
+    public MaintenanceDTO create(Long idProduct, NewMaintenanceDTO maintenanceDTO) {
+        Product product = productRepository.findById(idProduct)
+                .orElseThrow(() -> new ResourceNotFoundException("Product no found"));
+
         Maintenance maintenance = modelMapper.map(maintenanceDTO, Maintenance.class);
         maintenance.setProduct(product);
         maintenanceRepository.save(maintenance);
-        return modelMapper.map(maintenance,MaintenanceDTO.class);
+        return modelMapper.map(maintenance, MaintenanceDTO.class);
     }
-    
+
     @Override
     @Transactional(readOnly = true)
-    public MaintenanceDTO retrieve(Long idProduct , Long id) {
+    public MaintenanceDTO retrieve(Long idProduct, Long id) {
         Product product = productRepository.findById(idProduct)
-            .orElseThrow(()-> new ResourceNotFoundException("Product no found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product no found"));
         Maintenance maintenance = maintenanceRepository.findById(id)
-            .orElseThrow(()-> new ResourceNotFoundException("Maintenance not found"));
-            
+                .orElseThrow(() -> new ResourceNotFoundException("Maintenance not found"));
+
         maintenance.setProduct(product);
         return modelMapper.map(maintenance, MaintenanceDTO.class);
     }
 
     @Override
     @Transactional
-    public MaintenanceDTO update(MaintenanceDTO maintenanceDTO, Long idProduct , Long idMaintenance) {
+    public MaintenanceDTO update(MaintenanceDTO maintenanceDTO, Long idProduct, Long idMaintenance) {
         Product product = productRepository.findById(idProduct)
-        .orElseThrow(()-> new ResourceNotFoundException("Product no found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product no found"));
 
         Maintenance maintenance = maintenanceRepository.findById(idProduct)
-        .orElseThrow(() -> new ResourceNotFoundException("Maintenance not found"));
-        
+                .orElseThrow(() -> new ResourceNotFoundException("Maintenance not found"));
+
         maintenance = modelMapper.map(maintenanceDTO, Maintenance.class);
         maintenance.setProduct(product);
         maintenanceRepository.save(maintenance);
 
         return modelMapper.map(maintenance, MaintenanceDTO.class);
     }
-    
+
     @Override
     @Transactional
-    public void delete(Long idProduct, Long id){       
-        
+    public void delete(Long idProduct, Long id) {
         Product product = productRepository.findById(idProduct)
-        .orElseThrow(()-> new ResourceNotFoundException("Product no found"));
-
-        Maintenance maintenance = maintenanceRepository.findById(idProduct)
-        .orElseThrow(() -> new ResourceNotFoundException("Maintenance not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Exam not found"));
+        Maintenance maintenance = maintenanceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Question not found"));
         maintenance.setProduct(product);
         maintenanceRepository.deleteById(maintenance.getId());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<MaintenanceDTO> list(Long idProduct){
+    public List<MaintenanceDTO> list(Long idProduct) {
         Product product = productRepository.findById(idProduct)
-        .orElseThrow(()-> new ResourceNotFoundException("Product no found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product no found"));
 
-        List<Maintenance> maintenances =maintenanceRepository.findByProduct(product);
-        if (maintenances.isEmpty()) throw new NoContentException("Maintenance is empty");
-        return maintenances.stream().map(maintenance -> modelMapper.map(maintenance,MaintenanceDTO.class))
-        .collect(Collectors.toList());
+        List<Maintenance> maintenances = maintenanceRepository.findByProduct(product);
+        if (maintenances.isEmpty())
+            throw new NoContentException("Maintenance is empty");
+        return maintenances.stream().map(maintenance -> modelMapper.map(maintenance, MaintenanceDTO.class))
+                .collect(Collectors.toList());
     }
 
-    
 }
