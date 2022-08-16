@@ -1,23 +1,17 @@
 package com.farming_production.farming_production.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farming_production.farming_production.dto.UserDTO;
-import com.farming_production.farming_production.dto.NewUserDTO;
+import com.farming_production.farming_production.models.User;
 import com.farming_production.farming_production.services.UserService;
 
 
@@ -25,39 +19,20 @@ import com.farming_production.farming_production.services.UserService;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
     private final UserService service;
+    private final BCryptPasswordEncoder passwordEncoder;
   
-    public UserController(UserService srv){
+    public UserController(UserService srv, BCryptPasswordEncoder pass){
         this.service =srv;
+        this.passwordEncoder = pass;
     }
 
     @PostMapping()
-    public ResponseEntity<UserDTO> create(@Valid @RequestBody NewUserDTO userDTO){
-        UserDTO result = service.create(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);        
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> retrieve(@PathVariable("id") Long id){
-        UserDTO result = service.retrieve(id);
-        return ResponseEntity.ok().body(result);        
-    }
-
-    @GetMapping() //el verbo es diferente a create ya que va
-    public ResponseEntity<List<UserDTO>> list(){
-        List<UserDTO> result  = service.list();
-        return ResponseEntity.ok().body(result);        
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO, @PathVariable("id") Long id){
-        UserDTO result = service.update(userDTO, id);
-        return ResponseEntity.ok().body(result);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        service.delete(id);
-        return ResponseEntity.ok().body("User deleted!");        
+    public ResponseEntity<String> create(@Valid @RequestBody User newUser){
+        String passwordEncode = passwordEncoder.encode(newUser.getPassword());
+        newUser.setPassword(passwordEncode);
+        service.create(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created");        
     }
 }
