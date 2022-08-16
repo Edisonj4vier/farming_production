@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.farming_production.farming_production.dto.MaintenanceDTO;
+import com.farming_production.farming_production.dto.MaintenanceProductDTO;
 import com.farming_production.farming_production.dto.NewMaintenanceDTO;
 import com.farming_production.farming_production.exceptions.NoContentException;
 import com.farming_production.farming_production.exceptions.ResourceNotFoundException;
@@ -44,30 +45,26 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
     @Override
     @Transactional(readOnly = true)
-    public MaintenanceDTO retrieve(Long idProduct, Long id) {
+    public MaintenanceProductDTO retrieve(Long idProduct, Long id) {
         Product product = productRepository.findById(idProduct)
-                .orElseThrow(() -> new ResourceNotFoundException("Product no found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         Maintenance maintenance = maintenanceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Maintenance not found"));
-
         maintenance.setProduct(product);
-        return modelMapper.map(maintenance, MaintenanceDTO.class);
+        return modelMapper.map(maintenance, MaintenanceProductDTO.class);
     }
 
     @Override
     @Transactional
-    public MaintenanceDTO update(MaintenanceDTO maintenanceDTO, Long idProduct, Long idMaintenance) {
+    public MaintenanceProductDTO update(MaintenanceDTO maintenanceDTO, Long idProduct, Long id) {
         Product product = productRepository.findById(idProduct)
-                .orElseThrow(() -> new ResourceNotFoundException("Product no found"));
-
-        Maintenance maintenance = maintenanceRepository.findById(idProduct)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Maintenance maintenance = maintenanceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Maintenance not found"));
-
         maintenance = modelMapper.map(maintenanceDTO, Maintenance.class);
         maintenance.setProduct(product);
         maintenanceRepository.save(maintenance);
-
-        return modelMapper.map(maintenance, MaintenanceDTO.class);
+        return modelMapper.map(maintenance, MaintenanceProductDTO.class);
     }
 
     @Override
