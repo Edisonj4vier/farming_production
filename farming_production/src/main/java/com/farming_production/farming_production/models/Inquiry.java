@@ -34,10 +34,6 @@ public class Inquiry {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name="USER_ID", nullable=false)
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name="PRODUCT_ID", nullable=false)
     private Product product;
 
