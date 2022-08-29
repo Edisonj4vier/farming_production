@@ -23,7 +23,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-
+@Component
 public class JWTServiceImpl implements JWTService{
     public static final String SECRET = Base64Utils.encodeToString("FARMINGPRODUCTION".getBytes());
 	public static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);

@@ -21,11 +21,11 @@ import com.farming_production.farming_production.dto.NewMaintenanceDTO;
 import com.farming_production.farming_production.services.MaintenanceService;
 
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/products")
 @RestController
+@RequestMapping("/products")
 public class MaintenanceController {
 
-    private final MaintenanceService service;
+    final MaintenanceService service;
 
     public MaintenanceController(MaintenanceService srv) {
         this.service = srv;

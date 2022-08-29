@@ -20,11 +20,11 @@ import com.farming_production.farming_production.dto.NewSupplyDTO;
 import com.farming_production.farming_production.services.SupplyService;
 
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/products")
 @RestController
+@RequestMapping("/products")
 public class SupplyController {
 
-    private final SupplyService service;
+    final SupplyService service;
 
     public SupplyController(SupplyService srv) {
         this.service = srv;
