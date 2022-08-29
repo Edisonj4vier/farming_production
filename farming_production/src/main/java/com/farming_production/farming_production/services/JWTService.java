@@ -1,12 +1,13 @@
 package com.farming_production.farming_production.services;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.io.IOException;
+
 
 public interface JWTService {
     

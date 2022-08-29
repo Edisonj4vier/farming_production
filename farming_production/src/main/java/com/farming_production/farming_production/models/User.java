@@ -1,5 +1,6 @@
 package com.farming_production.farming_production.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,6 +22,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User {
+    
+    User() {
+        roles = new ArrayList<>();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
