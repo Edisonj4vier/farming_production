@@ -7,15 +7,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
-public class FarmingProductionApplication implements CommandLineRunner{
+public class FarmingProductionApplication{
 	
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	//@Autowired
+	//private BCryptPasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FarmingProductionApplication.class, args);
 	}
-
+/*
+ 
+ 
 	@Override
 	public void run(String... args) throws Exception {
 		String password = "FARMINGPRODUCTION";
@@ -25,5 +27,5 @@ public class FarmingProductionApplication implements CommandLineRunner{
 			System.out.println(bcryptPassword);
 		}		
 	}
-
+*/
 }
