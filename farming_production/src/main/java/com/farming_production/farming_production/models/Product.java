@@ -27,10 +27,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="NAME",nullable = false)
+    @Column(name="NAMES",nullable = false)
     private String name;
 
-    @Column(name="DESCRIPTION")
+    @Column(name="DESCRIPTIONS")
     private String description;
 
     @Column(name="CATEGORY")
@@ -39,7 +39,7 @@ public class Product {
     @Column(name="AMOUNT")
     private String amount;
 
-    @Column(name="DATE")
+    @Column(name="DATES")
     private String date;
 
     @Column(name = "CREATED_DATE")    

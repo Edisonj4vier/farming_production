@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class ProductController {
     }
 
     /* ================ CREATE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
     @PostMapping()
     public ResponseEntity<ProductDTO> create(@Valid @RequestBody NewProductDTO productDTO) {
         ProductDTO result = service.create(productDTO);
@@ -40,7 +42,7 @@ public class ProductController {
     }
 
     /* ================ RETRIEVE ================ */
-
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER" , "ROLE_WORKER"})
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> retrieve(@PathVariable("id") Long id) {
         ProductDTO result = service.retrieve(id);
@@ -48,6 +50,7 @@ public class ProductController {
     }
 
     /* ================ UPDATE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> update(@RequestBody ProductDTO productDTO, @PathVariable("id") Long id) {
         ProductDTO result = service.update(productDTO, id);
@@ -55,6 +58,7 @@ public class ProductController {
     }
 
     /* ================ DELETE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
     @DeleteMapping("/{id}")
     public ResponseEntity<String> remove(@PathVariable("id") Long id) {
         service.remove(id);
@@ -62,6 +66,7 @@ public class ProductController {
     }
 
     /* ================ LIST ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER" , "ROLE_WORKER"})
     @GetMapping("/{page}/{size}")
     public ResponseEntity<List<ProductDTO>> list(@PathVariable("page") int page,
             @PathVariable("size") int size, @RequestParam(name = "sort", required = false) String sort) {
@@ -70,6 +75,7 @@ public class ProductController {
     }
 
     /* ================ COUNT ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER" , "ROLE_WORKER"})
     @GetMapping("/count")
     public ResponseEntity<Long> count() {
         long result = service.count();

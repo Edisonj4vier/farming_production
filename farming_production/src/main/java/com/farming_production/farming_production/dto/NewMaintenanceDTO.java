@@ -12,6 +12,5 @@ public class NewMaintenanceDTO {
     private String name;
     private String description;
     private String date;
-    private String amount;
     private String state;
 }

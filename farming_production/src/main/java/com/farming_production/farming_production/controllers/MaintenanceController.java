@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ public class MaintenanceController {
     }
 
     /* ================ CREATE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
     @PostMapping("/{idProduct}/maintenances")
     public ResponseEntity<MaintenanceDTO> create(@PathVariable("idProduct") long idProduct,
             @Valid @RequestBody NewMaintenanceDTO maintenanceDTO) {
@@ -39,7 +41,7 @@ public class MaintenanceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
     /* ================ RETRIEVE ================ */
-
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER" , "ROLE_WORKER"})
     @GetMapping("/{idProduct}/maintenances/{id}")
     public ResponseEntity<MaintenanceDTO> retrieve(@PathVariable("idProduct") Long idProduct,
             @PathVariable("id") Long id) {
@@ -48,6 +50,7 @@ public class MaintenanceController {
     }
 
     /* ================ LIST ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER" , "ROLE_WORKER"})
     @GetMapping("/{idProduct}/maintenances")
     public ResponseEntity<List<MaintenanceDTO>> list(@PathVariable("idProduct") Long idProduct) {
         List<MaintenanceDTO> maintenances = service.list(idProduct);
@@ -55,6 +58,7 @@ public class MaintenanceController {
     }
 
     /* ================ UPDATE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
     @PutMapping("/{idProduct}/maintenances/{id}")
     public ResponseEntity<MaintenanceDTO> update(@RequestBody MaintenanceDTO maintenanceDTO,
             @PathVariable("idProduct") Long idProduct,
@@ -65,6 +69,7 @@ public class MaintenanceController {
     }
 
     /* ================ DELETE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
     @DeleteMapping("/{idProduct}/maintenances/{id}")
     public ResponseEntity<Void> delete(@PathVariable("idProduct") Long idProduct, @PathVariable("id") Long id) {
         service.delete(idProduct, id);

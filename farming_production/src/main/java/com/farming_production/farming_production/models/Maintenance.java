@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "TBL_MAINTENANCE")
+@Table(name = "TBL_MAINTENANCES")
 @Getter
 @Setter
 public class Maintenance {
@@ -27,19 +27,16 @@ public class Maintenance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAMES", nullable = false)
     private String name;
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTIONS")
     private String description;
 
-    @Column(name = "DATE")
+    @Column(name = "DATES")
     private String date;
 
-    @Column(name = "AMOUNT")
-    private String amount;
-
-    @Column(name = "STATE")
+    @Column(name = "STATES")
     private String state;
 
     @Column(name = "CREATED_DATE")    

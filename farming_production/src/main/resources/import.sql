@@ -1,11 +1,38 @@
-INSERT INTO `tbl_products`(`amount`, `category`, `description`, `name`) VALUES (2,'legumbre','semilllas','acelga')
+INSERT INTO TBL_PRODUCTS(ID , NAMES,DESCRIPTIONS,CATEGORY ,AMOUNT , DATES) VALUES (1 , 'Zanahoria','Semilla','Hortalizas' , 300 , '2022-09-12')
+INSERT INTO TBL_PRODUCTS(ID , NAMES,DESCRIPTIONS,CATEGORY ,AMOUNT , DATES) VALUES (2 , 'Patata','Semilla','Raices y tuberculos' , 325, '2022-08-23')
+INSERT INTO TBL_PRODUCTS(ID , NAMES,DESCRIPTIONS,CATEGORY ,AMOUNT , DATES) VALUES (3 , 'Trigo','Semilla','Cereal' , 100 , '2022-09-22')
+INSERT INTO TBL_PRODUCTS(ID , NAMES,DESCRIPTIONS,CATEGORY ,AMOUNT , DATES) VALUES (4 , 'Rabano','Semilla','Hortalizas' , 200 , '2022-09-21')
+INSERT INTO TBL_PRODUCTS(ID , NAMES,DESCRIPTIONS,CATEGORY ,AMOUNT , DATES) VALUES (5 , 'Manzanilla','Planta','Medicinales' , 500 , '2022-09-04')
+INSERT INTO TBL_PRODUCTS(ID , NAMES,DESCRIPTIONS,CATEGORY ,AMOUNT , DATES) VALUES (6 , 'Aguacate','Planta','Frutales' , 200 , '2022-07-04')
 
-INSERT INTO `tbl_maintenance`(`id`, `amount`, `date`, `description`, `name`, `state`, `product_id`) VALUES (1,100,'2002/12/12','Arreglo','ló','activo','1')
-INSERT INTO `tbl_maintenance`(`id`, `amount`, `date`, `description`, `name`, `state`, `product_id`) VALUES (2,100,'2002/12/12','Arreglo','Papa','activo','1')
-INSERT INTO `tbl_maintenance`(`id`, `amount`, `date`, `description`, `name`, `state`, `product_id`) VALUES (3,100,'2002/12/12','Arreglo','Zanahoria','activo','1')
 
-INSERT INTO `tbl_supplies`(`id`, `amount`, `description`, `expericion_date`, `name`, `maintenance_id`) VALUES (1,100,'Fertilizante','2002/12/01','Fertilizante','2')
 
-INSERT INTO `tbl_users`(`id`,`names`,`passwords`,`enableds`) VALUES (1, `Edison`,``,1);
-INSERT INTO `tbl_roles`(`id`,`roles`, USER_ID) VALUES (1, `Productor`,1);
-INSERT INTO `tbl_roles`(`id`,`roles`, USER_ID) VALUES (1, `Jornalero`,1);
+INSERT INTO TBL_MAINTENANCES(ID , NAMES,DESCRIPTIONS,DATES ,STATES, PRODUCT_ID) VALUES (1 , 'Riego','Riego con bomba','2022-09-30' , 'Inactivo', 1)
+INSERT INTO TBL_MAINTENANCES(ID , NAMES,DESCRIPTIONS,DATES ,STATES, PRODUCT_ID) VALUES (2 , 'Fumigar','Fumigar con propoleo','2022-19-30' , 'Inactivo', 1)
+
+
+INSERT INTO TBL_MAINTENANCES(ID , NAMES,DESCRIPTIONS,DATES ,STATES, PRODUCT_ID) VALUES (3 , 'Riego','Riego con bomba','2022-09-12' , 'Activo', 2)
+INSERT INTO TBL_MAINTENANCES(ID , NAMES,DESCRIPTIONS,DATES ,STATES, PRODUCT_ID) VALUES (4 , 'Fumigar','Fumigar con propoleo','2022-19-30' , 'Inactivo', 2)
+
+INSERT INTO TBL_MAINTENANCES(ID , NAMES,DESCRIPTIONS,DATES ,STATES, PRODUCT_ID) VALUES (5 , 'Riego','Riego con manguera','2022-09-30' , 'Inactivo', 3)
+
+INSERT INTO TBL_MAINTENANCES(ID , NAMES,DESCRIPTIONS,DATES ,STATES, PRODUCT_ID) VALUES (6 , 'Limpieza','Arranque de malezas','2022-09-30' , 'Inactivo', 4)
+
+
+
+INSERT INTO TBL_SUPPLIES(ID , NAMES,DESCRIPTIONS,AMOUNT , MAINTENANCE_ID) VALUES (1 , 'Bomba de agua','Herramienta', 100 , 1)
+INSERT INTO TBL_SUPPLIES(ID , NAMES,DESCRIPTIONS,AMOUNT , MAINTENANCE_ID) VALUES (2 , 'Fertilizante','Material',100 , 2)
+INSERT INTO TBL_SUPPLIES(ID , NAMES,DESCRIPTIONS,AMOUNT , MAINTENANCE_ID) VALUES (3 , 'Bomba','Herramienta',1 , 2)
+
+
+INSERT INTO TBL_SUPPLIES(ID , NAMES,DESCRIPTIONS,AMOUNT , MAINTENANCE_ID) VALUES (4 , 'Bomba de agua','Herramienta', 100 , 3)
+INSERT INTO TBL_SUPPLIES(ID , NAMES,DESCRIPTIONS,AMOUNT , MAINTENANCE_ID) VALUES (5 , 'Fertilizante','Material',100 , 4)
+INSERT INTO TBL_SUPPLIES(ID , NAMES,DESCRIPTIONS,AMOUNT , MAINTENANCE_ID) VALUES (6 , 'Bomba','Herramienta',1 , 4)
+
+INSERT INTO TBL_SUPPLIES(ID , NAMES,DESCRIPTIONS,AMOUNT , MAINTENANCE_ID) VALUES (7 , 'Azadon','Herramienta',1 , 6)
+INSERT INTO TBL_SUPPLIES(ID , NAMES,DESCRIPTIONS,AMOUNT , MAINTENANCE_ID) VALUES (8 , 'Pala','Herramienta',1 , 6)
+
+INSERT INTO TBL_USERS(ID, NAMES,PASSWORDS, ENABLEDS) VALUES (1, 'Ismael','$2a$10$DNQEqe2LB6D20ofVJ1z0teDo8YbdeLGcUGWQZOCLdOkTZb0q83lO6', 1);
+ 
+INSERT INTO TBL_ROLES(ID, ROLES, USER_ID) VALUES (1, 'ROLE_AGRICULTURAL_ENGINEER', 1); 
+INSERT INTO TBL_ROLES(ID, ROLES, USER_ID) VALUES (2, 'ROLE_WORKER', 1);

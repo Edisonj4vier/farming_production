@@ -1,5 +1,6 @@
 package com.farming_production.farming_production.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,22 +22,27 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User {
+    
+    User(){
+        roles = new ArrayList<>();
+    }
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(name = "NAMES", unique = true)    
-    private String name;
 
-    @Column(name = "PASSWORD")    
+    @Column(name = "NAMES", unique = true)
+    private String name;
+    
+    @Column(name = "PASSWORDS")
     private String password;
 
     @Column(name = "ENABLEDS")
     private Boolean enabled;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID")
-    private List<Role> roles;
-
+	@JoinColumn(name = "USER_ID")
+	private List<Role> roles;
 
 }

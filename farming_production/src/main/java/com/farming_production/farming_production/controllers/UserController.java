@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.farming_production.farming_production.models.User;
 import com.farming_production.farming_production.services.UserService;
-
-
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/users")
@@ -26,12 +24,16 @@ public class UserController {
     public UserController(UserService srv, BCryptPasswordEncoder pass){
         this.service =srv;
         this.passwordEncoder = pass;
+
     }
 
+    
     @PostMapping()
     public ResponseEntity<String> create(@Valid @RequestBody User newUser){
+        
         String passwordEncode = passwordEncoder.encode(newUser.getPassword());
-        newUser.setPassword(passwordEncode);
+        newUser.setPassword(passwordEncode);    
+
         service.create(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body("User created");        
     }

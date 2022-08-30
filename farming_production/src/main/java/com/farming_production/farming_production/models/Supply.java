@@ -26,15 +26,13 @@ public class Supply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "NAME", nullable = false, length = 100)
+    @Column(name = "NAMES", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTIONS")
     private String description;
     @Column(name = "AMOUNT")
     private short amount;
-    @Column(name = "EXPERICION_DATE")
-    private String expericionDate;
 
     @Column(name = "CREATED_DATE")    
     private Calendar createdDate;

@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ public class SupplyController {
 
     // (Long idProduct, Long idMaintenance, List<NewSupplyDTO> supplies)
     /* ================ CREATE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
     @PostMapping("/{id}/maintenances/{idMaintenance}/supplies")
     public ResponseEntity<List<SupplyDTO>> create(@PathVariable("id") Long id,
             @PathVariable("idMaintenance") Long idMaintenance, @Valid @RequestBody List<NewSupplyDTO> suppliesDTO) {
@@ -40,6 +42,7 @@ public class SupplyController {
     }
 
     /* ================ DELETE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
     @DeleteMapping("/{id}/maintenances/{idMaintenance}/supplies")
     public ResponseEntity<List<SupplyDTO>> delete(@PathVariable("id") Long id,
             @PathVariable("idMaintenance") Long idMaintenance) {
@@ -48,6 +51,7 @@ public class SupplyController {
     }
 
     /* ================ LIST ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER" , "ROLE_WORKER"})
     @GetMapping("/{id}/maintenances/{idMaintenance}/supplies")
     public ResponseEntity<List<SupplyDTO>> list(@PathVariable("id") Long id,
             @PathVariable("idMaintenance") Long idMaintenance) {

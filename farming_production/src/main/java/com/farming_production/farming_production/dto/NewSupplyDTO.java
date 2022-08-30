@@ -12,5 +12,4 @@ public class NewSupplyDTO {
     private String name;
     private String description;
     private short amount;
-    private String expericionDate;
 }
