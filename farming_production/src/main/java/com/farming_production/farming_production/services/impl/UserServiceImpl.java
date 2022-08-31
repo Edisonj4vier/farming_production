@@ -41,15 +41,20 @@ public class UserServiceImpl implements UserService  , UserDetailsService{
     
     @Override
 	@Transactional(readOnly=true)
-	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-		
+	public UserDetails loadUserByUsername(String name ) throws UsernameNotFoundException {
+
         User user = userRepository.findByName(name);
         
         if(user == null) {
         	logger.error("User "+ name + " not found");
         	throw new UsernameNotFoundException("Error: User" + name + " not found");
         }
-        
+
+        if (user.getPassword().equals("jgvajvajv")){
+            logger.error("User "+ name + " not found");
+        	throw new UsernameNotFoundException("Error: Wrong Password");
+        }
+
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         
         for(Role role: user.getRoles()) {
