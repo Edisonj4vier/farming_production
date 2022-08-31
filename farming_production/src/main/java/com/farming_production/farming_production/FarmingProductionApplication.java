@@ -18,7 +18,7 @@ public class FarmingProductionApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		String password="programador";	
+		String password="programador2";	
 		String bcryptPassword=passwordEncoder.encode(password);
 		System.out.println(bcryptPassword);
 		
