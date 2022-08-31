@@ -2,6 +2,7 @@ package com.farming_production.farming_production.models;
 
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -56,10 +58,8 @@ public class Supply {
         updatedBy = "user2";
     }
 
-
     @ManyToOne
-    @JoinColumn(name="MAINTENANCE_ID", nullable=false)
-    private Maintenance maintenance;    
-
+    @JoinColumn(name = "PRODUCT_ID", nullable = false)
+    private Product product;  
 
 }

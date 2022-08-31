@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,31 +32,48 @@ public class SupplyController {
         this.service = srv;
     }
 
-    // (Long idProduct, Long idMaintenance, List<NewSupplyDTO> supplies)
     /* ================ CREATE ================ */
     @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
-    @PostMapping("/{id}/maintenances/{idMaintenance}/supplies")
-    public ResponseEntity<List<SupplyDTO>> create(@PathVariable("id") Long id,
-            @PathVariable("idMaintenance") Long idMaintenance, @Valid @RequestBody List<NewSupplyDTO> suppliesDTO) {
-        List<SupplyDTO> optionDTOs = service.create(id, idMaintenance, suppliesDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(optionDTOs);
+    @PostMapping("/{idProduct}/supplies")
+    public ResponseEntity<SupplyDTO> create(@PathVariable("idProduct") long idProduct,
+            @Valid @RequestBody NewSupplyDTO supplyDTO) {
+        SupplyDTO result = service.create(idProduct, supplyDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
-
-    /* ================ DELETE ================ */
-    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
-    @DeleteMapping("/{id}/maintenances/{idMaintenance}/supplies")
-    public ResponseEntity<List<SupplyDTO>> delete(@PathVariable("id") Long id,
-            @PathVariable("idMaintenance") Long idMaintenance) {
-        service.remove(id, idMaintenance);
-        return ResponseEntity.noContent().build();
+    /* ================ RETRIEVE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER" , "ROLE_WORKER"})
+    @GetMapping("/{idProduct}/supplies/{id}")
+    public ResponseEntity<SupplyDTO> retrieve(@PathVariable("idProduct") Long idProduct,
+            @PathVariable("id") Long id) {
+        SupplyDTO result = service.retrieve(idProduct, id);
+        return ResponseEntity.ok().body(result);
     }
 
     /* ================ LIST ================ */
     @Secured({"ROLE_AGRICULTURAL_ENGINEER" , "ROLE_WORKER"})
-    @GetMapping("/{id}/maintenances/{idMaintenance}/supplies")
-    public ResponseEntity<List<SupplyDTO>> list(@PathVariable("id") Long id,
-            @PathVariable("idMaintenance") Long idMaintenance) {
-        List<SupplyDTO> optionDTOs = service.list(id, idMaintenance);
-        return ResponseEntity.status(HttpStatus.OK).body(optionDTOs);
+    @GetMapping("/{idProduct}/supplies")
+    public ResponseEntity<List<SupplyDTO>> list(@PathVariable("idProduct") Long idProduct) {
+        List<SupplyDTO> supplies = service.list(idProduct);
+        return ResponseEntity.ok().body(supplies);
     }
+
+    /* ================ UPDATE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
+    @PutMapping("/{idProduct}/supplies/{id}")
+    public ResponseEntity<SupplyDTO> update(@RequestBody SupplyDTO supplyDTO,
+            @PathVariable("idProduct") Long idProduct,
+            @PathVariable("id") Long id) {
+
+        SupplyDTO result = service.update(supplyDTO, idProduct, id);
+        return ResponseEntity.ok().body(result);
+    }
+
+    /* ================ DELETE ================ */
+    @Secured({"ROLE_AGRICULTURAL_ENGINEER"})
+    @DeleteMapping("/{idProduct}/supplies/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("idProduct") Long idProduct, @PathVariable("id") Long id) {
+        service.delete(idProduct, id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

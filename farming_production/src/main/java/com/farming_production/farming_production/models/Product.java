@@ -67,4 +67,8 @@ public class Product {
     
     @OneToMany(mappedBy="product" , cascade = CascadeType.REMOVE) //nombre del atributo en la clase B       
     private List<Maintenance> maintenances;
+
+    @OneToMany(mappedBy="product" , cascade = CascadeType.REMOVE) //nombre del atributo en la clase B       
+    private List<Supply> supply;
+
 }

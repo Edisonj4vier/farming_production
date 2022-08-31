@@ -64,9 +64,6 @@ public class Maintenance {
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID", nullable = false)
     private Product product;
-
-    @OneToMany(mappedBy = "maintenance")
-    private List<Supply> supplies;
     
 
 }
